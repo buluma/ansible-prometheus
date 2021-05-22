@@ -5,7 +5,7 @@
 
 
 # pull base image
-FROM williamyeh/ansible:ubuntu12.04-onbuild
+FROM williamyeh/ansible:ubuntu18.04-onbuild
 
 MAINTAINER William Yeh <william.pjyeh@gmail.com>
 
@@ -15,7 +15,10 @@ MAINTAINER William Yeh <william.pjyeh@gmail.com>
 #
 
 ENV PLAYBOOK test.yml
-RUN ansible-playbook-wrapper
+RUN echo "===> Installing git for ansible galaxy..."  && \
+    DEBIAN_FRONTEND=noninteractive  \
+    apt-get install -y -f git
+RUN ansible-playbook-wrapper -e 'prometheus_use_systemd=false'
 
 
 
@@ -32,12 +35,12 @@ RUN echo "===> Installing curl for testing purpose..."  && \
 
 
 VOLUME ["/data"]
-ENV    RESULT     /data/result-ubuntu12.04
+ENV    RESULT     /data/result-ubuntu18.04
 
 CMD  \
      service node_exporter start   &&  sleep 10  &&  \
      service alertmanager start    &&  sleep 10  &&  \
      service prometheus start      &&  sleep 60  &&  \
      curl --retry 5 --retry-max-time 120  http://localhost:9100/metrics  > $RESULT   && \
-     curl --retry 5 --retry-max-time 120  http://localhost:9093/         >> $RESULT  && \
+     curl --retry 5 --retry-max-time 120  http://localhost:9093/metrics  >> $RESULT  && \
      curl --retry 5 --retry-max-time 120  http://localhost:9090/metrics  >> $RESULT

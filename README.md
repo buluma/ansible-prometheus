@@ -1,14 +1,14 @@
 
-williamyeh.prometheus for Ansible Galaxy
+william-yeh.prometheus for Ansible Galaxy
 ============
 
-[![Circle CI](https://circleci.com/gh/William-Yeh/ansible-prometheus.svg?style=shield)](https://circleci.com/gh/William-Yeh/ansible-prometheus) [![Build Status](https://travis-ci.org/buluma/ansible-prometheus.svg?branch=master)](https://travis-ci.org/buluma/ansible-prometheus)
+[![Circle CI](https://circleci.com/gh/William-Yeh/ansible-prometheus.svg?style=shield)](https://circleci.com/gh/William-Yeh/ansible-prometheus) [![Build Status](https://travis-ci.org/William-Yeh/ansible-prometheus.svg?branch=master)](https://travis-ci.org/William-Yeh/ansible-prometheus)
 
 
 
 ## Summary
 
-Role name in Ansible Galaxy: **[buluma.prometheus](https://galaxy.ansible.com/buluma/prometheus/)**
+Role name in Ansible Galaxy: **[william-yeh.prometheus](https://galaxy.ansible.com/William-Yeh/prometheus)**
 
 This Ansible role has the following features for [Prometheus](http://prometheus.io/):
 
@@ -19,9 +19,12 @@ This Ansible role has the following features for [Prometheus](http://prometheus.
 
 To keep this role simple, this role only installs 3 components: Prometheus server, Node exporter, and Alertmanager. Use the following roles if you want to install other Prometheus exporters:
 
-- Consul: **[William-Yeh.consul_exporter](https://galaxy.ansible.com/William-Yeh/consul_exporter/)**
-- Elasticsearch: **[William-Yeh.es_cluster_exporter](https://galaxy.ansible.com/William-Yeh/es_cluster_exporter/)**
+- Consul: **[william-yeh.consul_exporter](https://galaxy.ansible.com/william-yeh/consul_exporter/)**
+- Elasticsearch: **[william-yeh.es_cluster_exporter](https://galaxy.ansible.com/william-yeh/es_cluster_exporter/)**
 - MongoDB: **[williamyeh.mongodb_exporter](https://galaxy.ansible.com/williamyeh/mongodb_exporter/)**
+
+
+Supports for Ubuntu 12.04 (Precise) and CentOS 6 have been ended since Nov 2018.
 
 
 
@@ -77,7 +80,7 @@ prometheus_download_path:  /tmp
 
 
 # version of helper utility "gosu"
-gosu_version:  "1.10"
+gosu_version:  "1.11"
 ```
 
 
@@ -87,8 +90,7 @@ gosu_version:  "1.10"
 If the Linux distributions are equipped with systemd, this role will use this mechanism accordingly. You can disable this (i.e., use traditional SysV-style init script) by defining the following variable(s) to `false`:
 
 ```yaml
-# currently, only node_exporter is supported.
-prometheus_node_exporter_use_systemd
+prometheus_use_systemd
 ```
 
 
@@ -99,7 +101,7 @@ User-configurable defaults:
 
 ```yaml
 # which version?
-prometheus_version:  1.5.0
+prometheus_version:  2.5.0
 
 
 
@@ -128,7 +130,7 @@ prometheus_conf_main
 ```
 
 
-User-installable rule files (see [doc](http://prometheus.io/docs/alerting/rules/) for details):
+User-installable rule files (see [doc](https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/) for details):
 
 
 ```yaml
@@ -145,7 +147,7 @@ prometheus_rule_files
 Alertmanager to be triggered:
 
 ```yaml
-prometheus_alertmanager_url
+prometheus_alertmanager_hostport
 ```
 
 
@@ -163,7 +165,7 @@ User-configurable defaults:
 
 ```yaml
 # which version?
-prometheus_node_exporter_version:  0.13.0
+prometheus_node_exporter_version:  0.16.0
 ```
 
 Additional command-line arguments, if any (use `node_exporter --help` to see the full list of arguments):
@@ -180,7 +182,7 @@ User-configurable defaults:
 
 ```yaml
 # which version?
-prometheus_alertmanager_version:  0.5.1
+prometheus_alertmanager_version:  0.15.3
 
 # directory for runtime database (currently for `silences.json`)
 prometheus_alertmanager_db_path: /var/lib/alertmanager
@@ -260,7 +262,7 @@ Alertmanager:
 
 ### Step 1: add role
 
-Add role name `williamyeh.prometheus` to your playbook file.
+Add role name `william-yeh.prometheus` to your playbook file.
 
 
 ### Step 2: add variables
@@ -276,12 +278,12 @@ Simple example:
 - hosts: all
   become: True
   roles:
-    - williamyeh.prometheus
+    - william-yeh.prometheus
 
   vars:
     prometheus_components: [ "prometheus", "alertmanager" ]
 
-    prometheus_alertmanager_url: "http://localhost:9093/"
+    prometheus_alertmanager_hostport: "localhost:9093"
 ```
 
 
@@ -297,7 +299,7 @@ More practical example:
 - hosts: all
   become: True
   roles:
-    - williamyeh.prometheus
+    - william-yeh.prometheus
 
   vars:
     prometheus_components:

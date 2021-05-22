@@ -5,7 +5,7 @@
 
 
 # pull base image
-FROM williamyeh/ansible:ubuntu16.04-onbuild
+FROM williamyeh/ansible:ubuntu18.04-onbuild
 
 MAINTAINER William Yeh <william.pjyeh@gmail.com>
 
@@ -18,6 +18,9 @@ ENV PLAYBOOK test.yml
 RUN echo "===> Installing git for ansible galaxy..."  && \
     DEBIAN_FRONTEND=noninteractive  \
     apt-get install -y -f git
+RUN sed -i -e 's/^\(prometheus_version:\).*$/\1 git/'                  defaults/main.yml
+RUN sed -i -e 's/^\(prometheus_node_exporter_version:\).*$/\1 git/'    defaults/main.yml
+RUN sed -i -e 's/^\(prometheus_alertmanager_version:\).*$/\1 git/'     defaults/main.yml
 RUN ansible-playbook-wrapper -e 'prometheus_use_systemd=false'
 
 
@@ -35,7 +38,7 @@ RUN echo "===> Installing curl for testing purpose..."  && \
 
 
 VOLUME ["/data"]
-ENV    RESULT     /data/result-ubuntu16.04
+ENV    RESULT     /data/result-ubuntu18.04-git
 
 CMD  \
      service node_exporter start   &&  sleep 10  &&  \
