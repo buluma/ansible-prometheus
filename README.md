@@ -2,13 +2,13 @@
 william-yeh.prometheus for Ansible Galaxy
 ============
 
-[![Circle CI](https://circleci.com/gh/William-Yeh/ansible-prometheus.svg?style=shield)](https://circleci.com/gh/William-Yeh/ansible-prometheus) [![Build Status](https://travis-ci.org/William-Yeh/ansible-prometheus.svg?branch=master)](https://travis-ci.org/William-Yeh/ansible-prometheus)
+[![Circle CI](https://circleci.com/gh/buluma/ansible-prometheus.svg?style=shield)](https://circleci.com/gh/buluma/ansible-prometheus) [![Build Status](https://travis-ci.org/buluma/ansible-prometheus.svg?branch=master)](https://travis-ci.org/buluma/ansible-prometheus)
 
 
 
 ## Summary
 
-Role name in Ansible Galaxy: **[william-yeh.prometheus](https://galaxy.ansible.com/William-Yeh/prometheus)**
+Role name in Ansible Galaxy: **[buluma.prometheus](https://galaxy.ansible.com/buluma/prometheus)**
 
 This Ansible role has the following features for [Prometheus](http://prometheus.io/):
 
